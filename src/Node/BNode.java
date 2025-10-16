@@ -1,3 +1,5 @@
+package Node;
+
 public class BNode {
     private BNode left, right, parent;
     private int valor;

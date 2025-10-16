@@ -1,3 +1,7 @@
+package Recursivo;
+
+import Node.BNode;
+
 public class BstRec extends BTreeRec {
     public BstRec(BNode root){
         super(root);

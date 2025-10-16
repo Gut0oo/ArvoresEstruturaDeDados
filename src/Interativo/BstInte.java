@@ -1,4 +1,8 @@
-public class BstInte extends BTreeInte{
+package Interativo;
+
+import Node.BNode;
+
+public class BstInte extends BTreeInte {
     public BstInte(BNode root){
         super(root);
     }

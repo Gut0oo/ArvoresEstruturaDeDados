@@ -1,3 +1,7 @@
+package Recursivo;
+
+import Node.BNode;
+
 public class BTreeRec {
     private BNode root;
 

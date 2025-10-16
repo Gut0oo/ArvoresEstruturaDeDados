@@ -1,3 +1,6 @@
+package Interativo;
+import Node.BNode;
+
 public class BTreeInte {
     private BNode root;
 
