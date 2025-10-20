@@ -118,6 +118,8 @@ public class BNode {
 
     public void setFB(int FB) { this.FB = FB; }
 
+    public int getFB() { return FB; }
+
     public BNode getLeft() {
         return left;
     }

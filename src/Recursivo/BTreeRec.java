@@ -137,6 +137,21 @@ public class BTreeRec {
         }
     }
 
+    public void paragrafado(BNode atual){
+        if(atual != null) {
+            System.out.print(
+                    "\nNó:" +
+                            "\n     Valor: " + atual.getValor() +
+                            "\n     Esquerda: " + ((atual.getLeft() != null) ? atual.getLeft().getValor() : null) +
+                            "\n     Direita: " + ((atual.getRight() != null) ? atual.getRight().getValor() : null) +
+                            "\n     FB: " + atual.getFB() +
+                            "\n"
+            );
+            paragrafado(atual.getLeft());
+            paragrafado(atual.getRight());
+        }
+    }
+
     public void clearAll(BNode atual){
         if(atual != null){
             clearAll(atual.getLeft());
