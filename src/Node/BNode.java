@@ -2,7 +2,7 @@ package Node;
 
 public class BNode {
     private BNode left, right, parent;
-    private int valor;
+    private int valor, FB;
 
     public BNode(int valor){
         this.valor = valor;
@@ -115,6 +115,8 @@ public class BNode {
     public int getValor() {
         return valor;
     }
+
+    public void setFB(int FB) { this.FB = FB; }
 
     public BNode getLeft() {
         return left;
