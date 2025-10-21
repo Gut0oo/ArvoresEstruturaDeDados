@@ -97,5 +97,14 @@ public class Main {
         System.out.print("Em-ordem após remoção: ");
         bstRec.inOrderRec(bstRec.getRoot());
         System.out.println();
+
+        AVLTreeRec avl = new AVLTreeRec(new BNode(10));
+        avl.insertRec(avl.getRoot(), 20);
+        avl.insertRec(avl.getRoot(), 30);
+
+        System.out.println();
+        avl.paragrafado(avl.getRoot());
+        System.out.println();
+
     }
 }

@@ -6,6 +6,7 @@ public class BNode {
 
     public BNode(int valor){
         this.valor = valor;
+        this.FB = 0;
     }
 
     //Métodos
