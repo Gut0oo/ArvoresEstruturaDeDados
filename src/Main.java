@@ -75,7 +75,7 @@ public class Main {
         System.out.println();
 
         System.out.println("\n=== Após deletar o 5 - Item G ===");
-        avl5.delete(4);
+        avl5.delete(5);
         avl5.paragrafado(avl5.getRoot());
         System.out.println();
 

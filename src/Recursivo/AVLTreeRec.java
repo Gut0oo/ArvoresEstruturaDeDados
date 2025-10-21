@@ -97,6 +97,7 @@ public class AVLTreeRec extends BstRec{
 
     //O parametro "no" é a raiz da subarvore que precisa ser balanceada
     public BNode rotateRight(BNode no){
+        System.out.println("→ Rotação Simples à Direita (RR)");
         boolean ehraiz = no.isRoot();
 
         BNode esq = no.getLeft();
@@ -119,6 +120,7 @@ public class AVLTreeRec extends BstRec{
     }
 
     public BNode rotateLeft(BNode no){
+        System.out.println("→ Rotação Simples à Esquerda (LL)");
         boolean ehraiz = no.isRoot();
 
         BNode dir = no.getRight();
@@ -140,11 +142,13 @@ public class AVLTreeRec extends BstRec{
     }
 
     public BNode rotateLeftRight(BNode no){
+        System.out.println("→ Rotação Dupla Esquerda-Direita (LR)");
         no.setLeft(rotateLeft(no.getLeft()));
         return rotateRight(no);
     }
 
     public BNode rotateRightLeft(BNode no){
+        System.out.println("→ Rotação Dupla Direita-Esquerda (RL)");
         no.setRight(rotateRight(no.getRight()));
         return rotateLeft(no);
     }
