@@ -8,55 +8,102 @@ public class AVLTreeRec extends BstRec{
         super(root);
     }
 
+    public void insert(int valor) {
+        setRoot(insertRec(getRoot(), valor));
+    }
 
-    
     @Override
-    public BNode insertRec(BNode atual, int valor){
-        if (atual == null) {
+    public BNode insertRec(BNode no, int valor){
+        if (no == null) {
             return new BNode(valor);
         }
 
-        if(atual.getValor() > valor){
-            atual.setLeft(insertRec(atual.getLeft(), valor));
+        if(no.getValor() > valor){
+            no.setLeft(insertRec(no.getLeft(), valor));
+            if (no.getLeft() != null) no.getLeft().setParent(no);
         }else{
-            atual.setRight(insertRec(atual.getRight(), valor));
+            no.setRight(insertRec(no.getRight(), valor));
+            if (no.getRight() != null) no.getRight().setParent(no);
         }
 
-        updateBalance(atual);
+        updateBalance(no);
 
-        if(atual != null && (atual.getFB() < -1 || atual.getFB() > 1)){
-            atual = balanceHelper(atual);
+        if(no.getFB() < -1 || no.getFB() > 1){
+            no = balanceHelper(no);
         }
 
-        return atual;
+        return no;
     }
 
-    public BNode balanceHelper(BNode atual){
-        if(atual.getFB() == -2 && atual.getLeft() != null && atual.getLeft().getFB() == -1){
-            rotateRight(atual);
-        } else if(atual.getFB() == 2 && atual.getRight() != null && atual.getRight().getFB() == 1){
-            rotateLeft(atual);
-        } else if(atual.getFB() == 2 && atual.getRight() != null && atual.getRight().getFB() == -1){
-            rotateRightLeft(atual);
-        } else if(atual.getFB() == -2 && atual.getLeft() != null && atual.getLeft().getFB() == 1){
-            rotateLeftRight(atual);
-        }  
+    public void delete(int valor){
+        setRoot(delete(getRoot(), valor));
+    }
 
-        return atual;
+    @Override
+    public BNode delete(BNode no, int valor){
+        if(no == null){
+            return null;
+        }
+
+        if(no.getValor() < valor){
+            no.setRight(delete(no.getRight(), valor));
+        }else if(no.getValor() > valor){
+            no.setLeft(delete(no.getLeft(), valor));
+        }else{
+            if(no.isLeaf()){
+                return null;
+            }else if(no.getDegree() == 1){
+                if(no.getLeft() != null){
+                    return no.getLeft();
+                }else{
+                    return no.getRight();
+                }
+            }else {
+                BNode temp = findMin(no.getRight());
+                no.setValor(temp.getValor());
+                no.setRight(delete(no.getRight(), temp.getValor()));
+            }
+        }
+
+        updateBalance(no);
+
+
+        if(no.getFB() < -1 || no.getFB() > 1){
+            no = balanceHelper(no);
+        }
+
+        return no;
+    }
+
+    public BNode balanceHelper(BNode no){
+        if(no.getFB() > 1){ //Desbalanceamento para o lado esquerdo
+            if(no.getLeft() != null && no.getLeft().getFB() >= 0){
+                return rotateRight(no);
+            }else if(no.getLeft() != null && no.getLeft().getFB() < 0){
+                return rotateLeftRight(no);
+            }
+        }
+
+        if(no.getFB() < -1){ //Desbalanceamento para o lado direito
+            if(no.getRight() != null && no.getRight().getFB() <= 0){
+                return rotateLeft(no);
+            }else if(no.getRight() != null && no.getRight().getFB() > 0){
+                return rotateRightLeft(no);
+            }
+        }
+
+        return no;
     }
 
     //O parametro "no" é a raiz da subarvore que precisa ser balanceada
     public BNode rotateRight(BNode no){
-        boolean ehraiz = (no == getRoot()) ? true : false;
+        boolean ehraiz = no.isRoot();
 
         BNode esq = no.getLeft();
         BNode temp = esq.getRight();
 
         no.setLeft(temp);
-        if(temp != null){
-            temp.setParent(no);
-            updateBalance(temp);
-        }  
+        if(temp != null) temp.setParent(no);
 
         esq.setRight(no);
         no.setParent(esq);
@@ -72,16 +119,13 @@ public class AVLTreeRec extends BstRec{
     }
 
     public BNode rotateLeft(BNode no){
-        boolean ehraiz = (no == getRoot()) ? true : false;
+        boolean ehraiz = no.isRoot();
 
         BNode dir = no.getRight();
         BNode temp = dir.getLeft();
 
         no.setRight(temp);
-        if(temp != null) {
-            temp.setParent(no);
-            updateBalance(temp);
-        }
+        if(temp != null) temp.setParent(no);
 
         dir.setLeft(no);
         no.setParent(dir);
